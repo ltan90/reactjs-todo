@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TaskItem from "./TaskItem";
 import { connect } from "react-redux";
+import * as actions from "./../actions/index";
 
 class TaskList extends Component {
   /* Lọc dữ liệu trên table
@@ -39,7 +40,7 @@ class TaskList extends Component {
           task={task}
           onDelete={this.props.onDelete}
           onUpdate={this.props.onUpdate}
-          onUpdateStatus={this.props.onUpdateStatus}
+          // onUpdateStatus={this.props.onUpdateStatus}
         />
       );
     });
@@ -94,7 +95,15 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onDelete: id => {
+      dispatch(actions.delTask(id));
+    }
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(TaskList);

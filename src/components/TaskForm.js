@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-//import * as actions from "./../actions/index";
-import * as types from "./../constants/ActionTypes";
+import * as actions from "./../actions/index";
 
 class TaskForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      id: "",
+      name: "",
+      status: false
+    };
   }
 
   componentWillMount() {
@@ -53,10 +56,9 @@ class TaskForm extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    console.log(this.state);
     // this.props.onSubmit(this.state);
-    //Clear & Close Form
     this.props.onAddTask(this.state);
+    //Clear & Close Form
     this.onClear();
     this.onCloseForm();
   };
@@ -130,15 +132,17 @@ class TaskForm extends Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    isDisplayForm: state.isDisplayForm
+  };
 };
 const mapDispatchToProps = dispatch => {
   return {
     onAddTask: task => {
-      dispatch({
-        type: types.ADD_TASK,
-        task //task: task
-      });
+      dispatch(actions.addTask(task));
+    },
+    onCloseForm: () => {
+      dispatch(actions.closeForm());
     }
   };
 };
